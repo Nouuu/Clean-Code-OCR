@@ -1,7 +1,6 @@
-Feature: A line represents a 9 digit number in 4 line and 27 columns
-  Each number is split in three columns
+Feature: A digit is split in three columns and four lines
   The first three line represent the digit, the fourth is blank to mark separation
-  As a parser of theses lines, I can parse the digits and return the correct number
+  As a parser of theses digits, I can parse the digit and return the correct number
 
   Scenario: Zero
     Given the following line
@@ -112,15 +111,3 @@ Feature: A line represents a 9 digit number in 4 line and 27 columns
     """
     When I parse this line
     Then I should get 9
-
-  Scenario: All Zeros
-    Given the following line
-    """
-     _  _  _  _  _  _  _  _  _
-    | || || || || || || || || |
-    |_||_||_||_||_||_||_||_||_|
-
-    """
-    When I parse this line
-    Then I should get 000000000
-
