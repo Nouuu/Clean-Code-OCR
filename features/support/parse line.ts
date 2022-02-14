@@ -1,5 +1,5 @@
 import {Given, Then, When} from '@cucumber/cucumber';
-import {expect, should} from "chai";
+import {expect} from "chai";
 
 let line_string: string;
 let line_parsed: string = '?????????';
