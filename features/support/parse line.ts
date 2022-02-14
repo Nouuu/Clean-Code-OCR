@@ -13,6 +13,6 @@ When('I parse this line', () => {
 });
 
 
-Then(/I should get (\w{1,9})/, (expected: string) => {
+Then(/I should get (\w+)/, (expected: string) => {
     expect(line_parsed).to.equal(expected);
 });
