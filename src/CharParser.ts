@@ -1,4 +1,4 @@
-import {Schema} from "./Schema";
+import { Schema } from './Schema';
 
 export class CharParser {
     readonly schema: Schema;
