@@ -48,6 +48,10 @@ When('I parse this text', () => {
     given_text_parsed = parser.parseText(given_string);
 });
 
+When(/I parse this text of (\d+) line$/, (maxLine: number) => {
+    given_text_parsed = parser.parseText(given_string, maxLine);
+});
+
 Then(/I should get (.+)/, (expected: string) => {
     expect(given_string_parsed).to.equal(expected);
 });
