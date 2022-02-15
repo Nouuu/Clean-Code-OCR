@@ -16,6 +16,22 @@ export class Parser {
         this.charHeight = charHeight;
     }
 
+    parseText(text: string, maxLines = 100): string[] {
+        let parsedLines = [];
+        const splicedLines = text.split("\n");
+        if(splicedLines.length < this.charHeight) {
+            return [];
+        }
+        for(let lineIndex = 0; lineIndex < (splicedLines.length / this.charHeight); lineIndex++) {
+            parsedLines.push(
+                this.parseLine(splicedLines.slice(lineIndex * this.charHeight,
+                  lineIndex * this.charHeight + this.charHeight).join("\n")
+                )
+            );
+        }
+        return parsedLines.splice(0, maxLines);
+    }
+
     parseLine(line: string, length = 9): string {
         let parsedLine = '';
         const splitLine = line.split('\n');
