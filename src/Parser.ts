@@ -1,13 +1,17 @@
-import { Schema } from './Schema';
 import { CharParser } from './CharParser';
+import { DigitParser } from './DigitParser';
 
 export class Parser {
     readonly charParser: CharParser;
     readonly charWidth: number;
     readonly charHeight: number;
 
-    constructor(schema: Schema, charWidth = 3, charHeight = 4) {
-        this.charParser = new CharParser(schema, '?');
+    constructor(
+        charWidth = 3,
+        charHeight = 4,
+        charParser: CharParser = new DigitParser('?')
+    ) {
+        this.charParser = charParser;
         this.charWidth = charWidth;
         this.charHeight = charHeight;
     }
@@ -15,16 +19,27 @@ export class Parser {
     parseLine(line: string, length = 9): string {
         let parsedLine = '';
         const splitLine = line.split('\n');
-        for (let i = 0; i < splitLine[1].length / this.charWidth; i++) {
-            let char = '';
-            for (let j = 0; j < this.charHeight; j++) {
-                char +=
-                    splitLine[j]
-                        .slice(i * this.charWidth, i * this.charWidth + this.charWidth)
-                        .trimEnd() + '\n';
-            }
-            parsedLine += this.charParser.parseChar(char);
+        for (let charIndex = 0; charIndex < length; charIndex++) {
+            parsedLine += this.getChar(charIndex, splitLine);
         }
         return parsedLine;
+    }
+
+    private getChar(charIndex: number, splitLine: string[]): string {
+        let char = '';
+        for (
+            let charLineIndex = 0;
+            charLineIndex < this.charHeight;
+            charLineIndex++
+        ) {
+            char +=
+                splitLine[charLineIndex]
+                    .slice(
+                        charIndex * this.charWidth,
+                        charIndex * this.charWidth + this.charWidth
+                    )
+                    .trimEnd() + '\n';
+        }
+        return this.charParser.parseChar(char);
     }
 }
