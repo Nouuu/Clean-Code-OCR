@@ -17,15 +17,24 @@ export class Parser {
     }
 
     parseText(text: string, maxLines = 100): string[] {
-        let parsedLines = [];
-        const splicedLines = text.split("\n");
-        if(splicedLines.length < this.charHeight) {
+        const parsedLines = [];
+        const splicedLines = text.split('\n');
+        if (splicedLines.length < this.charHeight) {
             return [];
         }
-        for(let lineIndex = 0; lineIndex < (splicedLines.length / this.charHeight); lineIndex++) {
+        for (
+            let lineIndex = 0;
+            lineIndex < splicedLines.length / this.charHeight;
+            lineIndex++
+        ) {
             parsedLines.push(
-                this.parseLine(splicedLines.slice(lineIndex * this.charHeight,
-                  lineIndex * this.charHeight + this.charHeight).join("\n")
+                this.parseLine(
+                    splicedLines
+                        .slice(
+                            lineIndex * this.charHeight,
+                            lineIndex * this.charHeight + this.charHeight
+                        )
+                        .join('\n')
                 )
             );
         }
