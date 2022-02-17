@@ -24,15 +24,15 @@ export class Parser {
         }
         for (
             let lineIndex = 0;
-            lineIndex < splicedLines.length / this.charHeight;
-            lineIndex++
+            lineIndex < splicedLines.length;
+            lineIndex += this.charHeight
         ) {
             parsedLines.push(
                 this.parseLine(
                     splicedLines
                         .slice(
-                            lineIndex * this.charHeight,
-                            lineIndex * this.charHeight + this.charHeight
+                            lineIndex,
+                            lineIndex + this.charHeight
                         )
                         .join('\n')
                 )
