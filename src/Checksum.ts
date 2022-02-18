@@ -4,19 +4,23 @@ export interface Checksum {
 
 export class NumberChecksum implements Checksum {
     check(input: string, mod = 11): boolean {
-        if (input.split('').some((char) => char === '?')) {
+        if (this.inputHasUnreadableSequence(input)) {
             return false;
         }
-        return (
-            input
-                .split('')
-                .reduce(
-                    (sum, currChar, index) =>
-                        (index + 1) * Number.parseInt(currChar) + sum,
-                    0
-                ) %
-                mod ===
-            0
-        );
+        return this.inputCharsSum(input) % mod === 0;
+    }
+
+    inputHasUnreadableSequence(input: string): boolean {
+        return input.split('').some((char) => char === '?');
+    }
+
+    inputCharsSum(input: string): number {
+        return input
+            .split('')
+            .reduce(
+                (sum, currChar, index) =>
+                    (index + 1) * Number.parseInt(currChar) + sum,
+                0
+            );
     }
 }
