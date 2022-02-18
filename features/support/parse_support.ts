@@ -1,4 +1,4 @@
-import { DataTable, Given, Then, When } from "@cucumber/cucumber";
+import { DataTable, Given, Then, When } from '@cucumber/cucumber';
 import { expect } from 'chai';
 import { Parser } from '../../src/Parser';
 import { DigitParser } from '../../src/DigitParser';
@@ -60,10 +60,10 @@ Then(/I should not get anything/, () => {
     expect(given_string_parsed).to.equal('');
 });
 
-Then(/^I should get$/, (lines: DataTable)=> {
+Then(/^I should get$/, (lines: DataTable) => {
     expect(given_text_parsed).to.eql(lines.raw()[0]);
 });
 
-Then('I should have an empty list',() => {
+Then('I should have an empty list', () => {
     expect(given_text_parsed).to.be.empty;
 });

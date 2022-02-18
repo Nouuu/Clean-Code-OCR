@@ -30,10 +30,7 @@ export class Parser {
             parsedLines.push(
                 this.parseLine(
                     splicedLines
-                        .slice(
-                            lineIndex,
-                            lineIndex + this.charHeight
-                        )
+                        .slice(lineIndex, lineIndex + this.charHeight)
                         .join('\n')
                 )
             );
