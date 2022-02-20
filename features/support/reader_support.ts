@@ -2,10 +2,10 @@ import { DataTable, Given, Then, When } from '@cucumber/cucumber';
 import { FileReader } from '../../src/FileReader';
 import { expect } from 'chai';
 import { FileError } from '../../src/FileError';
-import { Parser } from '../../src/Parser';
+import { DefaultParser } from '../../src/DefaultParser';
 
 const fileReader = new FileReader();
-const parser = new Parser();
+const parser = new DefaultParser();
 let filename: string = '';
 let fileContent: string = '';
 let thrownError: boolean = false;

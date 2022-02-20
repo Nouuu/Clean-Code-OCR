@@ -1,24 +1,24 @@
 import { DataTable, Given, Then, When } from '@cucumber/cucumber';
 import { expect } from 'chai';
-import { Parser } from '../../src/Parser';
+import { DefaultParser } from '../../src/DefaultParser';
 import { DigitParser } from '../../src/DigitParser';
 
 let given_string: string;
 let given_string_parsed: string;
 let given_text_parsed: string[];
 
-let parser = new Parser();
+let parser = new DefaultParser();
 let digitParser = new DigitParser('?');
 
 Given(/the following line$/, (line: string) => {
-    parser = new Parser();
+    parser = new DefaultParser();
     given_string = line;
 });
 
 Given(
     /the following line of digits with (\d+) height and (\d+) width per digits$/,
     (height: number, width: number, line: string) => {
-        parser = new Parser(width, height);
+        parser = new DefaultParser(width, height);
         given_string = line;
     }
 );
