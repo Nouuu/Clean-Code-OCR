@@ -1,5 +1,5 @@
-import {inputHasUnreadableSequence} from '../utils/line_utils';
-import {Checksum} from './Checksum';
+import { inputHasUnreadableSequence } from '../utils/line_utils';
+import { Checksum } from './Checksum';
 
 export class NumberChecksum implements Checksum {
     check(input: string, mod = 11, unreadableSequence = '?'): boolean {

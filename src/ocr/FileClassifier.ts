@@ -11,9 +11,7 @@ export class FileClassifier implements Classifier {
 
     getDestination(lineState: LineState): string {
         if (!this.lineStateAssociation.has(lineState)) {
-            throw new ClassifierError(
-                `No destination for line state`
-            );
+            throw new ClassifierError(`No destination for line state`);
         }
         // @ts-ignore
         return this.lineStateAssociation.get(lineState);
