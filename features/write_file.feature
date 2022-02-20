@@ -37,6 +37,20 @@ Feature: A file writer write given string input in file
     coucou
 
     """
+
+  Scenario: Unreachable filePath
+    Given I want to write some input in the file unreachable/file/path/basic-writeLine.txt
+    When I write line
+    """
+    coucou
+    """
+    Then I should have a write FileError thrown with message
+    """
+    Error while writing into file 'features/test_files/out/unreachable/file/path/basic-writeLine.txt'
+    ENOENT: no such file or directory, open 'features/test_files/out/unreachable/file/path/basic-writeLine.txt'
+    """
+
+
   Scenario: Multi writeLine
     Given I want to write some input in the file multi-writeLine.txt
     When I write line
