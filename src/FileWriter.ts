@@ -9,20 +9,20 @@ export class FileWriter implements Writer {
         this.source = source;
     }
 
-    write(input: string): void {
+    write(input: string, filename = this.source): void {
         try {
-            fs.writeFileSync(this.source, input, {
+            fs.writeFileSync(filename, input, {
                 encoding: 'utf-8',
                 flag: 'a+',
             });
         } catch (e: any) {
             throw new FileError(
-                `Error while writing into file '${this.source}'\n${e.message}`
+                `Error while writing into file '${filename}'\n${e.message}`
             );
         }
     }
 
-    writeLine(input: string): void {
-        this.write(input + '\n');
+    writeLine(input: string, filename = this.source): void {
+        this.write(input + '\n', filename);
     }
 }
