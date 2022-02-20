@@ -1,11 +1,51 @@
-import {LineState} from "../../src/ocr/LineState";
-import {Classifier} from "../../src/ocr/Classifier";
-import {FileClassifier} from "../../src/ocr/FileClassifier";
+import { LineState } from '../../src/ocr/LineState';
+import { Classifier } from '../../src/ocr/Classifier';
+import { FileClassifier } from '../../src/ocr/FileClassifier';
+import { DataTable, Given, Then, When } from '@cucumber/cucumber';
+import { expect } from 'chai';
+import { ClassifierError } from "../../src/ocr/ClassifierError";
 
-const lineStateAssociation: Map<LineState, string> = new Map([
-    [LineState.VALID, 'valid'],
-    [LineState.ERROR, 'error'],
-    [LineState.UNREADABLE, 'invalid'],
-]);
-const classifier: Classifier = new FileClassifier(lineStateAssociation);
+let lineStateAssociation: Map<LineState, string>;
+let classifier: Classifier;
 
+let given_destination: string;
+let thrownError: boolean = false;
+let thrownErrorMessage: string;
+Given(
+    /The following state to destination association$/,
+    (stateDestinationAssociation: DataTable) => {
+        lineStateAssociation = new Map(
+            stateDestinationAssociation
+                .raw()
+                .map(([lineState, destination]) => [
+                    LineState[lineState as 'ERROR' | 'VALID' | 'UNREADABLE'],
+                    destination,
+                ])
+        );
+        classifier = new FileClassifier(lineStateAssociation);
+    }
+);
+
+When(
+    /State of the line is (\w+)$/,
+    (state: 'ERROR' | 'VALID' | 'UNREADABLE') => {
+      try{
+        given_destination = classifier.getDestination(LineState[state]);
+      } catch (e: any) {
+        if (!(e instanceof ClassifierError)) {
+          throw new Error(e.message);
+        }
+        thrownError = true;
+        thrownErrorMessage = e.message;
+      }
+    }
+);
+
+Then(/The destination should be (\w+)/, (destination: string) => {
+    expect(given_destination).to.equal(destination);
+});
+
+Then(/^I should have a write FileError thrown with message$/, (errorMessage: string) => {
+  expect(thrownError).to.be.true;
+  expect(thrownErrorMessage).to.eq(errorMessage);
+});
