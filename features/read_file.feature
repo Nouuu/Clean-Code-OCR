@@ -29,4 +29,8 @@ Feature: A file reader read given source and return its string content
   Scenario: Unknown file
     Given the file idontexist.txt
     When I read this file
-    Then I should have a FileError throwed with message Error while reading file 'features/test_files/idontexist.txt'
+    Then I should have a FileError thrown with message
+  """
+  Error while reading file 'features/test_files/idontexist.txt'
+  ENOENT: no such file or directory, open 'features/test_files/idontexist.txt'
+  """
