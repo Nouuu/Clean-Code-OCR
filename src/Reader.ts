@@ -1,5 +1,5 @@
 export interface Reader {
-    read(input: string): string;
+    read(input: string): void;
 
-    parseSource(maxLine: number): string[];
+    getContent(): string;
 }

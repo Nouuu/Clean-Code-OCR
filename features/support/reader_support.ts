@@ -2,8 +2,10 @@ import { DataTable, Given, Then, When } from '@cucumber/cucumber';
 import { FileReader } from '../../src/FileReader';
 import { expect } from 'chai';
 import { FileError } from '../../src/FileError';
+import { Parser } from '../../src/Parser';
 
 const fileReader = new FileReader();
+const parser = new Parser();
 let filename: string = '';
 let fileContent: string = '';
 let thrownError: boolean = false;
@@ -18,7 +20,8 @@ Given(/the file (.*)$/, (givenFilename: string) => {
 
 When(/I read this file$/, () => {
     try {
-        fileContent = fileReader.read(filename);
+        fileReader.read(filename);
+        fileContent = fileReader.getContent()
     } catch (e: any) {
         if (!(e instanceof FileError)) {
             throw new Error(e.message);
@@ -29,7 +32,7 @@ When(/I read this file$/, () => {
 });
 
 When(/I parse its content$/, () => {
-    parsedContent = fileReader.parseSource();
+    parsedContent = parser.parseText(fileReader.getContent());
 });
 
 Then(/The file content should be$/, (expectedString: string) => {
