@@ -2,22 +2,22 @@ Feature: A
   ocr
   Scenario: A basic OCR test with classifier
     Given The default OCR with classifier
-      |ERROR|error.txt|
-      |UNREADABLE|invalid.txt|
-      |VALID|valid.txt|
+      |ERROR|errored.txt|
+      |UNREADABLE|unknown.txt|
+      |VALID|authorized.txt|
     When I run the OCR on the file input.txt
-    Then My error.txt file should contain
+    Then My errored.txt file should contain
     """
     356609701 ERR
 
     """
-    And My invalid.txt file should contain
+    And My unknown.txt file should contain
     """
     000???000 ILL
     00000000? ILL
 
     """
-    And My valid.txt file should contain
+    And My authorized.txt file should contain
     """
     123456789
     000000000

@@ -27,9 +27,9 @@ const parser: Parser = new DefaultParser(3, 4, charParser);
 const checkSum: Checksum = new NumberChecksum();
 
 const lineStateAssociation: Map<LineState, string> = new Map([
-    [LineState.VALID, 'valid_lines.txt'],
-    [LineState.ERROR, 'error_lines.txt'],
-    [LineState.UNREADABLE, 'unreadable_lines.txt'],
+    [LineState.VALID, 'authorized.txt'],
+    [LineState.ERROR, 'errored.txt'],
+    [LineState.UNREADABLE, 'unknown.txt'],
 ]);
 const classifier: Classifier = new FileClassifier(lineStateAssociation);
 
