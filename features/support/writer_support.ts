@@ -28,11 +28,27 @@ Given(
 );
 
 When(/^I write$/, (input: string) => {
-    writer.write(input);
+    try {
+        writer.write(input);
+    } catch (e: any) {
+        if (!(e instanceof FileError)) {
+            throw new Error(e.message);
+        }
+        thrownError = true;
+        thrownErrorMessage = e.message;
+    }
 });
 
 When(/^I write line$/, (input: string) => {
-    writer.writeLine(input);
+    try {
+        writer.writeLine(input);
+    } catch (e: any) {
+        if (!(e instanceof FileError)) {
+            throw new Error(e.message);
+        }
+        thrownError = true;
+        thrownErrorMessage = e.message;
+    }
 });
 
 Then(/^my file content should be$/, (expectedContent: string) => {
