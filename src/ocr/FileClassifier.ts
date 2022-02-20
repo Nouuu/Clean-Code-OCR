@@ -12,7 +12,7 @@ export class FileClassifier implements Classifier {
     getDestination(lineState: LineState): string {
         if (!this.lineStateAssociation.has(lineState)) {
             throw new ClassifierError(
-                `No destination for line state '${lineState}'`
+                `No destination for line state`
             );
         }
         // @ts-ignore

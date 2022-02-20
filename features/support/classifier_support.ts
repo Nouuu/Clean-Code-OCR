@@ -29,8 +29,9 @@ Given(
 When(
     /State of the line is (\w+)$/,
     (state: 'ERROR' | 'VALID' | 'UNREADABLE') => {
-      try{
-        given_destination = classifier.getDestination(LineState[state]);
+      try {
+        const lineState: LineState = LineState[state];
+        given_destination = classifier.getDestination(lineState);
       } catch (e: any) {
         if (!(e instanceof ClassifierError)) {
           throw new Error(e.message);
@@ -45,7 +46,7 @@ Then(/The destination should be (\w+)/, (destination: string) => {
     expect(given_destination).to.equal(destination);
 });
 
-Then(/^I should have a write FileError thrown with message$/, (errorMessage: string) => {
+Then(/The classifier should throw a ClassifierError with message$/, (errorMessage: string) => {
   expect(thrownError).to.be.true;
   expect(thrownErrorMessage).to.eq(errorMessage);
 });

@@ -31,5 +31,5 @@ Feature: A classifier defines the destination in which the line should be dispat
     When State of the line is VALID
     Then The classifier should throw a ClassifierError with message
     """
-    No destination for line state 'VALID'
+    No destination for line state
     """
