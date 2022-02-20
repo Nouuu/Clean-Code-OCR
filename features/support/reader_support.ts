@@ -1,8 +1,8 @@
 import { DataTable, Given, Then, When } from '@cucumber/cucumber';
-import { FileReader } from '../../src/FileReader';
+import { FileReader } from '../../src/io/FileReader';
 import { expect } from 'chai';
-import { FileError } from '../../src/FileError';
-import { DefaultParser } from '../../src/DefaultParser';
+import { FileError } from '../../src/io/FileError';
+import { DefaultParser } from '../../src/parser/DefaultParser';
 
 const fileReader = new FileReader();
 const parser = new DefaultParser();

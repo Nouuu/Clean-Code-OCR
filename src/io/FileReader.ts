@@ -3,11 +3,7 @@ import * as fs from 'fs';
 import { FileError } from './FileError';
 
 export class FileReader implements Reader {
-    private content: string;
-
-    constructor() {
-        this.content = '';
-    }
+    private content: string = '';
 
     read(input: string): void {
         try {

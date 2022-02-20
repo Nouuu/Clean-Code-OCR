@@ -1,6 +1,7 @@
 import { Given, When, Then } from "@cucumber/cucumber";
-import { Checksum, NumberChecksum } from "../../src/Checksum";
+import { Checksum} from "../../src/ocr/Checksum";
 import { expect } from "chai";
+import {NumberChecksum} from "../../src/ocr/NumberChecksum";
 
 let given_sequence: string;
 let given_sequence_validity: boolean;

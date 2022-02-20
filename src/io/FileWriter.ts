@@ -3,13 +3,7 @@ import * as fs from 'fs';
 import { FileError } from './FileError';
 
 export class FileWriter implements Writer {
-    private readonly source: string;
-
-    constructor(source: string) {
-        this.source = source;
-    }
-
-    write(input: string, filename = this.source): void {
+    write(input: string, filename: string): void {
         try {
             fs.writeFileSync(filename, input, {
                 encoding: 'utf-8',
@@ -22,7 +16,7 @@ export class FileWriter implements Writer {
         }
     }
 
-    writeLine(input: string, filename = this.source): void {
+    writeLine(input: string, filename: string): void {
         this.write(input + '\n', filename);
     }
 }

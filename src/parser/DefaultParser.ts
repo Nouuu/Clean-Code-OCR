@@ -3,9 +3,9 @@ import { DigitParser } from './DigitParser';
 import { Parser } from './Parser';
 
 export class DefaultParser implements Parser {
-    readonly charParser: CharParser;
-    readonly charWidth: number;
-    readonly charHeight: number;
+    private readonly charParser: CharParser;
+    private readonly charWidth: number;
+    private readonly charHeight: number;
 
     constructor(
         charWidth = 3,

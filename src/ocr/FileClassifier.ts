@@ -2,8 +2,8 @@ import { LineState } from './LineState';
 import { Classifier } from './Classifier';
 import { ClassifierError } from './ClassifierError';
 
-class FileClassifier implements Classifier {
-    readonly lineStateAssociation: Map<LineState, string>;
+export class FileClassifier implements Classifier {
+    private readonly lineStateAssociation: Map<LineState, string>;
 
     constructor(lineStateAssociation: Map<LineState, string>) {
         this.lineStateAssociation = lineStateAssociation;

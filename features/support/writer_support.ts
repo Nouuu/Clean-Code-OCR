@@ -1,9 +1,9 @@
 import { Given, Then, When } from '@cucumber/cucumber';
 import { assert, expect } from 'chai';
-import { FileError } from '../../src/FileError';
-import { FileWriter } from '../../src/FileWriter';
+import { FileError } from '../../src/io/FileError';
+import { FileWriter } from '../../src/io/FileWriter';
 import * as fs from 'fs';
-import { Writer } from '../../src/Writer';
+import { Writer } from '../../src/io/Writer';
 
 let writer: Writer;
 let filename: string = '';
@@ -20,13 +20,13 @@ Given(
             fs.unlinkSync(filename);
         }
 
-        writer = new FileWriter(filename);
+        writer = new FileWriter();
     }
 );
 
 When(/^I write$/, (input: string) => {
     try {
-        writer.write(input);
+        writer.write(input, filename);
     } catch (e: any) {
         if (!(e instanceof FileError)) {
             throw new Error(e.message);
@@ -38,7 +38,7 @@ When(/^I write$/, (input: string) => {
 
 When(/^I write line$/, (input: string) => {
     try {
-        writer.writeLine(input);
+        writer.writeLine(input, filename);
     } catch (e: any) {
         if (!(e instanceof FileError)) {
             throw new Error(e.message);

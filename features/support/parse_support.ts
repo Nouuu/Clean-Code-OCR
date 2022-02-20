@@ -1,7 +1,7 @@
 import { DataTable, Given, Then, When } from '@cucumber/cucumber';
 import { expect } from 'chai';
-import { DefaultParser } from '../../src/DefaultParser';
-import { DigitParser } from '../../src/DigitParser';
+import { DefaultParser } from '../../src/parser/DefaultParser';
+import { DigitParser } from '../../src/parser/DigitParser';
 
 let given_string: string;
 let given_string_parsed: string;
