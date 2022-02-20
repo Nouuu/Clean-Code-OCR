@@ -21,7 +21,7 @@ Given(/^the file (.*)$/, (givenFilename: string) => {
 When(/^I read this file$/, () => {
     try {
         fileReader.read(filename);
-        fileContent = fileReader.getContent()
+        fileContent = fileReader.getContent();
     } catch (e: any) {
         if (!(e instanceof FileError)) {
             throw new Error(e.message);
@@ -40,7 +40,7 @@ Then(/^The file content should be$/, (expectedString: string) => {
 });
 
 Then(
-    /^I should have a FileError throwed with message (.*)$/,
+    /^I should have a FileError throwed with message$/,
     (errorMessage: string) => {
         expect(thrownError).to.be.true;
         expect(thrownErrorMessage).to.eq(errorMessage);

@@ -12,7 +12,7 @@ Given(/The following sequence (.+)$/, (sequence: string) => {
 });
 
 When('I check the sequence\'s checksum', () => {
-  console.log(given_sequence);
+  // console.log(given_sequence);
   given_sequence_validity = checksum.check(given_sequence);
 });
 
