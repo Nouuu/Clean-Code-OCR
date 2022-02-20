@@ -1,6 +1,6 @@
 import { CharParser } from './CharParser';
 
-const defaultDigitMap: Map<string, string> = new Map([
+export const defaultDigitMap: Map<string, string> = new Map([
     [' _\n| |\n|_|', '0'],
     ['\n  |\n  |', '1'],
     [' _\n _|\n|_', '2'],

@@ -48,7 +48,7 @@ export class DefaultOCR implements OCR {
 
     private getLineState(line: string): LineState {
         if (inputHasUnreadableSequence(line, this.unreadableSequence)) {
-            return LineState.UNKNOWN;
+            return LineState.UNREADABLE;
         }
         return this.checkSum.check(line) ? LineState.VALID : LineState.ERROR;
     }

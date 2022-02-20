@@ -1,5 +1,5 @@
 export enum LineState {
     ERROR = 'ERR',
-    UNKNOWN = 'ILL',
+    UNREADABLE = 'ILL',
     VALID = '',
 }
