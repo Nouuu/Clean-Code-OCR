@@ -55,7 +55,7 @@ Then(/^my file content should be$/, (expectedContent: string) => {
     } catch (e: any) {
         assert.fail(e.message);
     }
-    expect(fileContent.toString()).to.eq(expectedContent);
+    expect(fileContent).to.eq(expectedContent);
 });
 
 Then(
