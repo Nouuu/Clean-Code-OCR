@@ -12,6 +12,7 @@ export class NumberChecksum implements Checksum {
     inputCharsSum(input: string): number {
         return input
             .split('')
+            .reverse()
             .reduce(
                 (sum, currChar, index) =>
                     (index + 1) * Number.parseInt(currChar) + sum,

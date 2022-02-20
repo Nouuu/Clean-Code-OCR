@@ -11,7 +11,12 @@ Feature: A checksum is calculated using the index of a digit multiplied by the v
     When I check the sequence's checksum
     Then It should be false
 
-  Scenario: One to nine invalid checksum
+  Scenario: One to nine valid checksum
     Given The following sequence 123456789
+    When I check the sequence's checksum
+    Then It should be true
+
+  Scenario: Invalid checksum
+    Given The following sequence 356609701
     When I check the sequence's checksum
     Then It should be false

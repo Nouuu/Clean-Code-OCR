@@ -1,3 +1,3 @@
 export interface OCR {
-    run(source: string, maxLines: number): void;
+    run(source: string, maxLines?: number): void;
 }
