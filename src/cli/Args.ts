@@ -47,8 +47,6 @@ export class Args implements ArgParser {
                 case tokenArgs.stringToken:
                     this.stringKeys.set(key, this.getString(key));
                     break;
-                default:
-                    break;
             }
         });
     }
