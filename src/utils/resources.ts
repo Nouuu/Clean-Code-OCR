@@ -1,7 +1,5 @@
-import { ArgsDefaultValues, DefaultValues, TokenArg } from '../cli/utils';
-import { LineState } from '../ocr/LineState';
-import { Classifier } from '../ocr/Classifier';
-import { FileClassifier } from '../ocr/FileClassifier';
+import {ArgsDefaultValues, DefaultValues, TokenArg} from '../cli/utils';
+import {LineState} from '../ocr/LineState';
 
 // CLI
 

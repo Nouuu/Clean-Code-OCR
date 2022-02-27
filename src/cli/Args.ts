@@ -42,13 +42,17 @@ export class Args implements ArgParser {
                 case tokenArgs.numberToken:
                     this.numberKeys.set(
                         keyArg.trim()[0],
-                        this.defaultValues.defaultNumber
+                        this.argsDefaultValues?.numberArgDefaultValues.get(
+                            keyArg.trim()[0]
+                        ) ?? this.defaultValues.defaultNumber
                     );
                     break;
                 case tokenArgs.stringToken:
                     this.stringKeys.set(
                         keyArg.trim()[0],
-                        this.defaultValues.defaultString
+                        this.argsDefaultValues?.stringArgDefaultValues.get(
+                            keyArg.trim()[0]
+                        ) ?? this.defaultValues.defaultString
                     );
                     break;
                 default:
