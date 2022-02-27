@@ -10,7 +10,8 @@ import {
     defaultDigitMap,
     OCRArgsDefaultValues,
     OCRSchema,
-    splitClassifier,
+    splitClassifierStateAssociation,
+    unifiedClassifierStateAssociation,
     unreadableSequence,
 } from './utils/resources';
 import { Reader } from './io/Reader';
@@ -19,6 +20,8 @@ import { Writer } from './io/Writer';
 import { FileWriter } from './io/FileWriter';
 import { Checksum } from './ocr/Checksum';
 import { NumberChecksum } from './ocr/NumberChecksum';
+import { FileClassifier } from './ocr/FileClassifier';
+import { LineState } from './ocr/LineState';
 
 const reader: Reader = new FileReader();
 const writer: Writer = new FileWriter();
@@ -29,29 +32,37 @@ const charParser: CharParser = new DigitParser(
 );
 const parser: Parser = new DefaultParser(3, 4, charParser);
 
-const ocr: OCR = new DefaultOCR(
-    reader,
-    writer,
-    parser,
-    checkSum,
-    splitClassifier,
-    unreadableSequence
-);
-
-const executeApplication = (d: boolean, p: number, h: string) => {
-    console.log(
-        `Application running - detached (${d}), port: (${p}), hero is (${h})`
-    );
-};
-
 try {
     const args = new Args(OCRSchema, OCRArgsDefaultValues);
     args.parse(`-d -p 42 -h 'Vincent Vega'`);
 
-    const detach = args.getBoolean('d');
-    const port = args.getNumber('p');
-    const hero = args.getString('h');
-    executeApplication(detach, port, hero);
+    const classifierAssociation = args.getBoolean('s')
+        ? splitClassifierStateAssociation
+        : unifiedClassifierStateAssociation;
+
+    if (args.getString('v').length > 0) {
+        classifierAssociation.set(LineState.VALID, args.getString('v'));
+    }
+    if (args.getString('e').length > 0) {
+        classifierAssociation.set(LineState.ERROR, args.getString('e'));
+    }
+    if (args.getString('u').length > 0) {
+        classifierAssociation.set(LineState.UNREADABLE, args.getString('u'));
+    }
+
+    const classifier = new FileClassifier(classifierAssociation);
+
+    const ocr: OCR = new DefaultOCR(
+        reader,
+        writer,
+        parser,
+        checkSum,
+        classifier,
+        unreadableSequence
+    );
+
+    ocr.run(args.getString('i'), args.getNumber('m'), args.getNumber('l'));
+
 } catch (e: any) {
-    console.error(`Parse error: ${e.message}`);
+    console.error(`Error: ${e.message}`);
 }

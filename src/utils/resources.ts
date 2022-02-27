@@ -2,14 +2,6 @@ import { ArgsDefaultValues, DefaultValues, TokenArg } from '../cli/utils';
 import { LineState } from '../ocr/LineState';
 import { Classifier } from '../ocr/Classifier';
 import { FileClassifier } from '../ocr/FileClassifier';
-import { Reader } from '../io/Reader';
-import { FileReader } from '../io/FileReader';
-import { Writer } from '../io/Writer';
-import { FileWriter } from '../io/FileWriter';
-import { CharParser } from '../parser/CharParser';
-import { DigitParser } from '../parser/DigitParser';
-import {Checksum} from "../ocr/Checksum";
-import {NumberChecksum} from "../ocr/NumberChecksum";
 
 // CLI
 
@@ -55,26 +47,16 @@ export const defaultDigitMap: Map<string, string> = new Map([
     [' _\n|_|\n _|', '9'],
 ]);
 
-const splitClassifierStateAssociation: Map<LineState, string> = new Map([
+export const splitClassifierStateAssociation: Map<LineState, string> = new Map([
     [LineState.VALID, 'authorized.txt'],
     [LineState.ERROR, 'errored.txt'],
     [LineState.UNREADABLE, 'unknown.txt'],
 ]);
-const unifiedClassifierStateAssociation: Map<LineState, string> = new Map([
+export const unifiedClassifierStateAssociation: Map<LineState, string> = new Map([
     [LineState.VALID, 'output.txt'],
     [LineState.ERROR, 'output.txt'],
     [LineState.UNREADABLE, 'output.txt'],
 ]);
 
-export const splitClassifier: Classifier = new FileClassifier(
-    splitClassifierStateAssociation
-);
-
-export const unifiedClassifier: Classifier = new FileClassifier(
-    unifiedClassifierStateAssociation
-);
 
 export const unreadableSequence = '?';
-
-
-
