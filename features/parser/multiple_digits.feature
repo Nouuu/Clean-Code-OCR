@@ -12,4 +12,16 @@ Feature: A line represents a 9 digit number in 4 line and 27 columns
 
     """
     When I parse this line
-    Then I should get 0
+    Then I should get 000000000
+
+  Scenario: One to Nine
+    Given the following line
+    """
+        _  _     _  _  _  _  _
+      | _| _||_||_ |_   ||_||_|
+      ||_  _|  | _||_|  ||_| _|
+
+    """
+    When I parse this line
+    Then I should get 123456789
+

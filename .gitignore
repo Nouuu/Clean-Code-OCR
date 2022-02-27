@@ -104,3 +104,7 @@ dist
 .tern-port
 
 .idea/
+
+cucumber_report.html
+
+features/test_files/out/*.txt
