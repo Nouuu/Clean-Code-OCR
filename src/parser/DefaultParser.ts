@@ -17,7 +17,7 @@ export class DefaultParser implements Parser {
         this.charHeight = charHeight;
     }
 
-    parseText(text: string, maxLines = 100): string[] {
+    parseText(text: string, maxLines = 100, lineSize = 9): string[] {
         const parsedLines = [];
         const splicedLines = text.split('\n');
         if (splicedLines.length < this.charHeight) {
@@ -32,7 +32,8 @@ export class DefaultParser implements Parser {
                 this.parseLine(
                     splicedLines
                         .slice(lineIndex, lineIndex + this.charHeight)
-                        .join('\n')
+                        .join('\n'),
+                    lineSize
                 )
             );
         }

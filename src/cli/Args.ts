@@ -1,15 +1,15 @@
 import { ArgParser } from './ArgParser';
 import {
-    ArgDefaultValues,
-    basicDefaultValues,
-    basicTokens,
+    ArgsDefaultValues,
     DefaultValues,
     ParsingError,
     TokenArg,
 } from './utils';
+import { basicDefaultValues, basicTokens } from '../utils/resources';
 
 export class Args implements ArgParser {
     readonly defaultValues: DefaultValues;
+    readonly argsDefaultValues: ArgsDefaultValues;
 
     readonly stringDelimiter: string;
 
@@ -19,13 +19,14 @@ export class Args implements ArgParser {
 
     constructor(
         schema: string,
+        argsDefaultValues: ArgsDefaultValues,
         stringDelimiter = "'",
         tokenArgs: TokenArg = basicTokens,
-        defaultValues: DefaultValues = basicDefaultValues,
-        argsDefaultValues?: ArgDefaultValues
+        defaultValues: DefaultValues = basicDefaultValues
     ) {
         this.defaultValues = defaultValues;
         this.stringDelimiter = stringDelimiter;
+        this.argsDefaultValues = argsDefaultValues;
         this.analyseSchema(schema, tokenArgs);
     }
 
@@ -61,11 +62,19 @@ export class Args implements ArgParser {
     }
 
     getNumber(key: string): number {
-        return this.numberKeys.get(key) ?? this.defaultValues.defaultNumber;
+        return (
+            this.numberKeys.get(key) ??
+            this.argsDefaultValues.numberArgDefaultValues.get(key) ??
+            this.defaultValues.defaultNumber
+        );
     }
 
     getString(key: string): string {
-        return this.stringKeys.get(key) ?? this.defaultValues.defaultString;
+        return (
+            this.stringKeys.get(key) ??
+            this.argsDefaultValues.stringArgDefaultValues.get(key) ??
+            this.defaultValues.defaultString
+        );
     }
 
     parse(input: string): void {
@@ -76,7 +85,7 @@ export class Args implements ArgParser {
             if (this.numberKeys.has(key)) {
                 this.parseNumber(value, key);
             } else if (this.booleanKeys.has(key)) {
-                this.parseBoolean(key);
+                this.parseBoolean('true', key);
             } else if (this.stringKeys.has(key)) {
                 this.parseString(value, key);
             }
@@ -96,8 +105,8 @@ export class Args implements ArgParser {
         }
     }
 
-    private parseBoolean(key: string) {
-        this.booleanKeys.set(key, true);
+    private parseBoolean(value: string, key: string) {
+        this.booleanKeys.set(key, /true/i.test(value));
     }
 
     private parseNumber(value: string, key: string) {

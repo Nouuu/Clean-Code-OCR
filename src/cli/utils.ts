@@ -14,19 +14,7 @@ export type DefaultValues = {
     defaultNumber: number;
     defaultString: string;
 };
-export type ArgDefaultValues = {
+export type ArgsDefaultValues = {
     stringArgDefaultValues: Map<string, string>;
     numberArgDefaultValues: Map<string, number>;
-    booleanArgDefaultValues: Map<string, boolean>;
-};
-
-export const basicTokens: TokenArg = {
-    booleanToken: undefined,
-    numberToken: '#',
-    stringToken: '*',
-};
-export const basicDefaultValues: DefaultValues = {
-    defaultBoolean: false,
-    defaultNumber: 0,
-    defaultString: '',
 };

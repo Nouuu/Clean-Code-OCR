@@ -1,9 +1,9 @@
 export interface ArgParser {
-  parse(input: string): void;
+    parse(input: string): void;
 
-  getBoolean(key: string): boolean;
+    getBoolean(key: string): boolean;
 
-  getNumber(key: string): number;
+    getNumber(key: string): number;
 
-  getString(key: string): string;
+    getString(key: string): string;
 }

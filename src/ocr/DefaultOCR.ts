@@ -31,11 +31,15 @@ export class DefaultOCR implements OCR {
         this.unreadableSequence = unreadableSequence;
     }
 
-    run(source: string, maxLines = 100): void {
+    run(source: string, maxLines = 100, lineSize = 9): void {
         this.reader.read(source);
         const sourceContent = this.reader.getContent();
 
-        const parsedLines = this.parser.parseText(sourceContent, maxLines);
+        const parsedLines = this.parser.parseText(
+            sourceContent,
+            maxLines,
+            lineSize
+        );
 
         for (let parsedLine of parsedLines) {
             const lineState: LineState = this.getLineState(parsedLine);
