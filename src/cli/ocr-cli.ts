@@ -53,29 +53,56 @@ export class OcrCLI implements CLI {
             );
             argsParser.parse(args);
 
-            const classifierAssociation =
-                OcrCLI.getClassifierAssociation(argsParser);
-            this.defineClassifiers(argsParser, classifierAssociation);
-
-            const classifier = new FileClassifier(classifierAssociation);
-
-            const ocr: OCR = new DefaultOCR(
-                this.reader,
-                this.writer,
-                this.parser,
-                this.checkSum,
-                classifier,
-                unreadableSequence
-            );
-
-            ocr.run(
-                argsParser.getString('i'),
-                argsParser.getNumber('m'),
-                argsParser.getNumber('l')
-            );
+            if (argsParser.getBoolean('h')) {
+                OcrCLI.displayHelp();
+            } else {
+                this.runOcr(argsParser);
+            }
         } catch (e: any) {
             console.error(`Error: ${e.message}`);
         }
+    }
+
+    private static displayHelp(): void {
+        console.log(
+            '\th (optional): boolean => display help\n' +
+                '\ts (optional, default=false): boolean => split classifier into multiple files\n' +
+                '\tm (optional, default=100): number => set the max number of lines to process\n' +
+                '\tl (optional, default=9): number => number of digits per lines\n' +
+                "\ti (optional, default='input.txt'): string => input filename\n" +
+                '\tv (optional): string => valid output filename\n' +
+                '\te (optional): string => error output filename\n' +
+                '\tu (optional): string => unreadable output filename\n'
+        );
+    }
+
+    private runOcr(argsParser: ArgParser): void {
+        const classifierAssociation =
+            OcrCLI.getClassifierAssociation(argsParser);
+        this.defineClassifiers(argsParser, classifierAssociation);
+
+        const classifier = new FileClassifier(classifierAssociation);
+
+        const ocr: OCR = new DefaultOCR(
+            this.reader,
+            this.writer,
+            this.parser,
+            this.checkSum,
+            classifier,
+            unreadableSequence
+        );
+
+        ocr.run(
+            argsParser.getString('i'),
+            argsParser.getNumber('m'),
+            argsParser.getNumber('l')
+        );
+    }
+
+    private static getClassifierAssociation(argsParser: ArgParser) {
+        return argsParser.getBoolean('s')
+            ? splitClassifierStateAssociation
+            : unifiedClassifierStateAssociation;
     }
 
     private defineClassifiers(
@@ -100,12 +127,6 @@ export class OcrCLI implements CLI {
             'u',
             LineState.UNREADABLE
         );
-    }
-
-    private static getClassifierAssociation(argsParser: ArgParser) {
-        return argsParser.getBoolean('s')
-            ? splitClassifierStateAssociation
-            : unifiedClassifierStateAssociation;
     }
 
     defineClassifier(

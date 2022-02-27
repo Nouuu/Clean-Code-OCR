@@ -26,7 +26,8 @@ export const blankArgsDefaultValues: ArgsDefaultValues = {
     stringArgDefaultValues: new Map(),
     numberArgDefaultValues: new Map(),
 };
-export const OCRSchema = 's,m#,l#,i*,v*,e*,u*';
+export const OCRSchema = 'h,s,m#,l#,i*,v*,e*,u*';
+// h: boolean => display Help
 // s: boolean => splitClassifier
 // m: number => maxLines
 // l: number => line size
