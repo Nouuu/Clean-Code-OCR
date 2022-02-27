@@ -9,7 +9,7 @@ import { basicDefaultValues, basicTokens } from '../utils/resources';
 
 export class Args implements ArgParser {
     readonly defaultValues: DefaultValues;
-    readonly argsDefaultValues: ArgsDefaultValues;
+    readonly argsDefaultValues?: ArgsDefaultValues;
 
     readonly stringDelimiter: string;
 
@@ -19,7 +19,7 @@ export class Args implements ArgParser {
 
     constructor(
         schema: string,
-        argsDefaultValues: ArgsDefaultValues,
+        argsDefaultValues?: ArgsDefaultValues,
         stringDelimiter = "'",
         tokenArgs: TokenArg = basicTokens,
         defaultValues: DefaultValues = basicDefaultValues
@@ -64,7 +64,7 @@ export class Args implements ArgParser {
     getNumber(key: string): number {
         return (
             this.numberKeys.get(key) ??
-            this.argsDefaultValues.numberArgDefaultValues.get(key) ??
+            this.argsDefaultValues?.numberArgDefaultValues.get(key) ??
             this.defaultValues.defaultNumber
         );
     }
@@ -72,7 +72,7 @@ export class Args implements ArgParser {
     getString(key: string): string {
         return (
             this.stringKeys.get(key) ??
-            this.argsDefaultValues.stringArgDefaultValues.get(key) ??
+            this.argsDefaultValues?.stringArgDefaultValues.get(key) ??
             this.defaultValues.defaultString
         );
     }
