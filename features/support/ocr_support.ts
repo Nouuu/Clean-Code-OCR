@@ -5,7 +5,7 @@ import { Writer } from '../../src/io/Writer';
 import { Parser } from '../../src/parser/Parser';
 import { DefaultParser } from '../../src/parser/DefaultParser';
 import { CharParser } from '../../src/parser/CharParser';
-import {  DigitParser } from '../../src/parser/DigitParser';
+import { DigitParser } from '../../src/parser/DigitParser';
 import { Checksum } from '../../src/ocr/Checksum';
 import { NumberChecksum } from '../../src/ocr/NumberChecksum';
 import { Classifier } from '../../src/ocr/Classifier';
@@ -16,7 +16,7 @@ import { DefaultOCR } from '../../src/ocr/DefaultOCR';
 import { DataTable, Given, Then, When } from '@cucumber/cucumber';
 import fs from 'fs';
 import { assert, expect } from 'chai';
-import {defaultDigitMap} from "../../src/utils/resources";
+import { defaultDigitMap } from '../../src/utils/resources';
 
 const reader: Reader = new FileReader();
 const writer: Writer = new FileWriter();

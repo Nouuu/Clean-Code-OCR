@@ -5,10 +5,7 @@ export class DigitParser implements CharParser {
     private readonly digitMap: Map<string, string>;
     private readonly errorStr: string;
 
-    constructor(
-        errorStr: string,
-        digitMap= defaultDigitMap
-    ) {
+    constructor(errorStr: string, digitMap = defaultDigitMap) {
         this.errorStr = errorStr;
         this.digitMap = digitMap;
     }

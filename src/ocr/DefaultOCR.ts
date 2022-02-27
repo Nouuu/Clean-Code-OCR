@@ -41,7 +41,7 @@ export class DefaultOCR implements OCR {
             lineSize
         );
 
-        for (let parsedLine of parsedLines) {
+        for (const parsedLine of parsedLines) {
             const lineState: LineState = this.getLineState(parsedLine);
             this.writer.writeLine(
                 `${parsedLine} ${lineState}`.trim(),
