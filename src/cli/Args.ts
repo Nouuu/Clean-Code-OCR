@@ -102,6 +102,10 @@ export class Args implements ArgParser {
             value.endsWith(this.stringDelimiter)
         ) {
             this.stringKeys.set(key, value.slice(1, -1));
+        } else {
+            throw new ParsingError(
+                `Cannot parse string (${value}) on key ${key}`
+            );
         }
     }
 
