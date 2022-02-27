@@ -5,11 +5,15 @@ import {
     ParsingError,
     TokenArg,
 } from './utils';
-import { basicDefaultValues, basicTokens } from '../utils/resources';
+import {
+    basicDefaultValues,
+    basicTokens,
+    blankArgsDefaultValues,
+} from '../utils/resources';
 
 export class Args implements ArgParser {
     readonly defaultValues: DefaultValues;
-    readonly argsDefaultValues?: ArgsDefaultValues;
+    readonly argsDefaultValues: ArgsDefaultValues;
 
     readonly stringDelimiter: string;
 
@@ -19,7 +23,7 @@ export class Args implements ArgParser {
 
     constructor(
         schema: string,
-        argsDefaultValues?: ArgsDefaultValues,
+        argsDefaultValues: ArgsDefaultValues = blankArgsDefaultValues,
         stringDelimiter = "'",
         tokenArgs: TokenArg = basicTokens,
         defaultValues: DefaultValues = basicDefaultValues
@@ -32,28 +36,16 @@ export class Args implements ArgParser {
 
     private analyseSchema(schema: string, tokenArgs: TokenArg) {
         schema.split(',').forEach((keyArg) => {
+            const key = keyArg.trim()[0];
             switch (keyArg.trim()[1]) {
                 case tokenArgs.booleanToken:
-                    this.booleanKeys.set(
-                        keyArg,
-                        this.defaultValues.defaultBoolean
-                    );
+                    this.booleanKeys.set(key, this.getBoolean(key));
                     break;
                 case tokenArgs.numberToken:
-                    this.numberKeys.set(
-                        keyArg.trim()[0],
-                        this.argsDefaultValues?.numberArgDefaultValues.get(
-                            keyArg.trim()[0]
-                        ) ?? this.defaultValues.defaultNumber
-                    );
+                    this.numberKeys.set(key, this.getNumber(key));
                     break;
                 case tokenArgs.stringToken:
-                    this.stringKeys.set(
-                        keyArg.trim()[0],
-                        this.argsDefaultValues?.stringArgDefaultValues.get(
-                            keyArg.trim()[0]
-                        ) ?? this.defaultValues.defaultString
-                    );
+                    this.stringKeys.set(key, this.getString(key));
                     break;
                 default:
                     break;
@@ -68,7 +60,7 @@ export class Args implements ArgParser {
     getNumber(key: string): number {
         return (
             this.numberKeys.get(key) ??
-            this.argsDefaultValues?.numberArgDefaultValues.get(key) ??
+            this.argsDefaultValues.numberArgDefaultValues.get(key) ??
             this.defaultValues.defaultNumber
         );
     }
@@ -76,7 +68,7 @@ export class Args implements ArgParser {
     getString(key: string): string {
         return (
             this.stringKeys.get(key) ??
-            this.argsDefaultValues?.stringArgDefaultValues.get(key) ??
+            this.argsDefaultValues.stringArgDefaultValues.get(key) ??
             this.defaultValues.defaultString
         );
     }

@@ -1,5 +1,5 @@
-import {ArgsDefaultValues, DefaultValues, TokenArg} from '../cli/utils';
-import {LineState} from '../ocr/LineState';
+import { ArgsDefaultValues, DefaultValues, TokenArg } from '../cli/utils';
+import { LineState } from '../ocr/LineState';
 
 // CLI
 
@@ -20,6 +20,11 @@ export const OCRArgsDefaultValues: ArgsDefaultValues = {
         ['m', 100],
         ['l', 9],
     ]),
+};
+
+export const blankArgsDefaultValues: ArgsDefaultValues = {
+    stringArgDefaultValues: new Map(),
+    numberArgDefaultValues: new Map(),
 };
 export const OCRSchema = 's,m#,l#,i*,v*,e*,u*';
 // s: boolean => splitClassifier
@@ -50,11 +55,11 @@ export const splitClassifierStateAssociation: Map<LineState, string> = new Map([
     [LineState.ERROR, 'errored.txt'],
     [LineState.UNREADABLE, 'unknown.txt'],
 ]);
-export const unifiedClassifierStateAssociation: Map<LineState, string> = new Map([
-    [LineState.VALID, 'output.txt'],
-    [LineState.ERROR, 'output.txt'],
-    [LineState.UNREADABLE, 'output.txt'],
-]);
-
+export const unifiedClassifierStateAssociation: Map<LineState, string> =
+    new Map([
+        [LineState.VALID, 'output.txt'],
+        [LineState.ERROR, 'output.txt'],
+        [LineState.UNREADABLE, 'output.txt'],
+    ]);
 
 export const unreadableSequence = '?';

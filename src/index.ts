@@ -22,6 +22,7 @@ import { Checksum } from './ocr/Checksum';
 import { NumberChecksum } from './ocr/NumberChecksum';
 import { FileClassifier } from './ocr/FileClassifier';
 import { LineState } from './ocr/LineState';
+import { ArgParser } from './cli/ArgParser';
 
 const reader: Reader = new FileReader();
 const writer: Writer = new FileWriter();
@@ -33,8 +34,8 @@ const charParser: CharParser = new DigitParser(
 const parser: Parser = new DefaultParser(3, 4, charParser);
 
 try {
-    const args = new Args(OCRSchema, OCRArgsDefaultValues);
-    args.parse(`-d -p 42 -h 'Vincent Vega'`);
+    const args: ArgParser = new Args(OCRSchema, OCRArgsDefaultValues);
+    args.parse(process.argv.join(' '));
 
     const classifierAssociation = args.getBoolean('s')
         ? splitClassifierStateAssociation
@@ -62,7 +63,6 @@ try {
     );
 
     ocr.run(args.getString('i'), args.getNumber('m'), args.getNumber('l'));
-
 } catch (e: any) {
     console.error(`Error: ${e.message}`);
 }
