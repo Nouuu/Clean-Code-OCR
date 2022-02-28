@@ -100,11 +100,9 @@ export class OcrCLI implements CLI {
     }
 
     private static getClassifierAssociation(argsParser: ArgParser) {
-        return new Map<LineState, string>(
-            argsParser.getBoolean('s')
-                ? splitClassifierStateAssociation
-                : unifiedClassifierStateAssociation
-        );
+        return argsParser.getBoolean('s')
+            ? splitClassifierStateAssociation
+            : unifiedClassifierStateAssociation;
     }
 
     private defineClassifiers(

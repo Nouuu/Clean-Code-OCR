@@ -1,63 +1,35 @@
-import { DataTable, Given, Then, When } from '@cucumber/cucumber';
+import { Given, Then, When } from '@cucumber/cucumber';
 import { OcrCLI } from '../../src/cli/ocr-cli';
 import { expect } from 'chai';
-import fs from 'fs';
-import { FileWriter } from '../../src/io/FileWriter';
-import { FileReader } from '../../src/io/FileReader';
+import {
+    splitClassifierStateAssociation,
+    unifiedClassifierStateAssociation,
+} from '../../src/utils/resources';
+import { LineState } from '../../src/ocr/LineState';
 
 const chai = require('chai');
 const spies = require('chai-spies');
 chai.use(spies);
 
 let given_args: string;
-let writeDestinations: string[];
-let readFiles: string[];
-let source: string;
 
 let ocrCli: OcrCLI;
 
 Given(/the following command line/, (args: string) => {
     ocrCli = new OcrCLI();
     given_args = args;
-    writeDestinations = [];
-    readFiles = [];
-    source = '';
-
     chai.spy.restore(OcrCLI, 'displayHelp');
     chai.spy.restore(OcrCLI, 'runOcr');
-    chai.spy.restore(FileWriter, 'writer');
-    chai.spy.restore(FileReader, 'reader');
+    chai.spy.restore(ocrCli['reader'], 'read');
+    chai.spy.restore(splitClassifierStateAssociation, 'get');
 
     // Spies
     chai.spy.on(OcrCLI, 'displayHelp');
     ocrCli['runOcr'] = chai.spy.on(ocrCli, 'runOcr');
-
-    // Mocks
-    ocrCli['writer']['write'] = chai.spy.on(
-        ocrCli['writer'],
-        'write',
-        (a: string, dest: string) => {
-            if (writeDestinations.indexOf(dest) === -1) {
-                writeDestinations.push(dest);
-            }
-        }
-    );
-    ocrCli['reader']['read'] = chai.spy.on(
-        ocrCli['reader'],
-        'read',
-        (input: string) => {
-            source = input;
-            if (readFiles.indexOf(input) === -1) {
-                readFiles.push(input);
-            }
-        }
-    );
-    ocrCli['reader']['getContent'] = chai.spy.on(
-        ocrCli['reader'],
-        'getContent',
-        () => {
-            return fs.readFileSync(source).toString();
-        }
+    ocrCli['reader']['read'] = chai.spy.on(ocrCli['reader'], 'read');
+    splitClassifierStateAssociation.get = chai.spy.on(
+        splitClassifierStateAssociation,
+        'get'
     );
 });
 
@@ -70,10 +42,19 @@ Then(/it should display helper/, () => {
     expect(ocrCli['runOcr']).to.have.not.been.called();
 });
 
-Then(/to have read from/, (filenames: DataTable) => {
-    expect(readFiles).to.have.members(filenames.raw()[0]);
+Then(/to have read from/, (filename: string) => {
+    expect(ocrCli['reader']['read']).to.have.been.called.with(filename);
 });
 
-Then(/to have written on/, (filenames: DataTable) => {
-    expect(writeDestinations).to.have.members(filenames.raw()[0]);
+Then(
+    /unifiedClassifierStateAssociation (.+) should be (.+)/,
+    (state: 'VALID' | 'ERROR' | 'UNREADABLE', destination: string) => {
+        expect(
+            unifiedClassifierStateAssociation.get(LineState[state])
+        ).to.equal(destination);
+    }
+);
+
+Then(/splitClassifierStateAssociation should have been used/, () => {
+    expect(splitClassifierStateAssociation.get).to.have.been.called();
 });

@@ -15,7 +15,9 @@ Feature: An OCR CLI setups the OCR parser before running it
     """
     When I run the ocr cli
     Then to have read from
-      | ./features/test_files/input.txt |
+    """
+    ./features/test_files/input.txt
+    """
 
   Scenario: Override enable classifier
     Given the following command line
@@ -23,8 +25,7 @@ Feature: An OCR CLI setups the OCR parser before running it
       -i './features/test_files/input.txt' -s
       """
     When I run the ocr cli
-    Then to have written on
-      | errored.txt | unknown.txt | authorized.txt |
+    Then splitClassifierStateAssociation should have been used
 
   Scenario: Override error output parameter
     Given the following command line
@@ -32,8 +33,7 @@ Feature: An OCR CLI setups the OCR parser before running it
     -i './features/test_files/input.txt' -e './features/test_files/out/errored.txt'
     """
     When I run the ocr cli
-    Then to have written on
-      | output.txt | ./features/test_files/out/errored.txt |
+    Then unifiedClassifierStateAssociation ERROR should be ./features/test_files/out/errored.txt
 
   Scenario: Override unknown output parameter
     Given the following command line
@@ -41,8 +41,7 @@ Feature: An OCR CLI setups the OCR parser before running it
     -i './features/test_files/input.txt' -u './features/test_files/out/unknown.txt'
     """
     When I run the ocr cli
-    Then to have written on
-      | output.txt | ./features/test_files/out/unknown.txt |
+    Then unifiedClassifierStateAssociation UNREADABLE should be ./features/test_files/out/unknown.txt
 
   Scenario: Override valid output parameter
     Given the following command line
@@ -50,5 +49,4 @@ Feature: An OCR CLI setups the OCR parser before running it
     -i './features/test_files/input.txt' -v './features/test_files/out/valid.txt'
     """
     When I run the ocr cli
-    Then to have written on
-      | output.txt | ./features/test_files/out/valid.txt |
+    Then unifiedClassifierStateAssociation VALID should be ./features/test_files/out/valid.txt
