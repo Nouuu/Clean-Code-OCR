@@ -19,7 +19,6 @@ Given(/the schema '(.*)' with default values$/, (schema: string) => {
         stringArgDefaultValues,
         numberArgDefaultValues,
     };
-    console.log(defaultArgsValues);
     argsParser = new Args(schema, defaultArgsValues);
 });
 
