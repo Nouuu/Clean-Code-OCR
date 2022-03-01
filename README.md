@@ -114,15 +114,13 @@ When we run the cucumber tests, it generates two reports
 The first one is a code coverage on cucumber's tests. This file is viewable on **coverage/index.html** and look like
 this :
 
-![image-20220208192354230](doc/README/image-20220208192354230.png)
-
-![image-20220208192400658](doc/README/image-20220208192400658.png)
+![image-20220301120104082](images/README/image-20220301120104082.png)![image-20220301120202609](images/README/image-20220301120202609.png)
 
 #### Cucumber report
 
 The other report is the result of the ran cucumber's tests :
 
-![image-20220208192621443](doc/README/image-20220208192621443.png)
+![image-20220301120254863](images/README/image-20220301120254863.png)
 
-![image-20220208192633476](doc/README/image-20220208192633476.png)
+![image-20220301120448078](images/README/image-20220301120448078.png)
 
