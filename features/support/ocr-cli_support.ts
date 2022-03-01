@@ -1,10 +1,6 @@
 import { Given, Then, When } from '@cucumber/cucumber';
 import { OcrCLI } from '../../src/cli/ocr-cli';
 import { expect, spy, use } from 'chai';
-import {
-    splitClassifierStateAssociation,
-    unifiedClassifierStateAssociation,
-} from '../../src/utils/resources';
 import { LineState } from '../../src/ocr/LineState';
 import spies from 'chai-spies';
 
@@ -33,7 +29,11 @@ Given(/the following command line/, (args: string) => {
 });
 
 When(/I run the ocr cli/, () => {
-    ocrCli.run(given_args);
+    ocrCli.run(
+        given_args,
+        splitClassifierStateAssociation,
+        unifiedClassifierStateAssociation
+    );
 });
 
 Then(/it should display helper/, () => {
@@ -41,7 +41,7 @@ Then(/it should display helper/, () => {
     expect(ocrCli['runOcr']).to.have.not.been.called();
 });
 
-Then(/to have read from/, (filename: string) => {
+Then(/it should have read from/, (filename: string) => {
     expect(ocrCli['reader']['read']).to.have.been.called.with(filename);
 });
 
@@ -57,3 +57,14 @@ Then(
 Then(/splitClassifierStateAssociation should have been used/, () => {
     expect(splitClassifierStateAssociation.get).to.have.been.called();
 });
+
+const splitClassifierStateAssociation: Map<LineState, string> = new Map([
+    [LineState.VALID, 'features/out/authorized.txt'],
+    [LineState.ERROR, 'features/out/errored.txt'],
+    [LineState.UNREADABLE, 'features/out/unknown.txt'],
+]);
+const unifiedClassifierStateAssociation: Map<LineState, string> = new Map([
+    [LineState.VALID, 'features/out/output.txt'],
+    [LineState.ERROR, 'features/out/output.txt'],
+    [LineState.UNREADABLE, 'features/out/output.txt'],
+]);

@@ -14,7 +14,7 @@ Feature: An OCR CLI setups the OCR parser before running it
     -i './features/test_files/input.txt'
     """
     When I run the ocr cli
-    Then to have read from
+    Then it should have read from
     """
     ./features/test_files/input.txt
     """

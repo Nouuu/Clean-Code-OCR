@@ -1,3 +1,9 @@
+import { LineState } from '../ocr/LineState';
+
 export interface CLI {
-    run(args: string): void;
+    run(
+        args: string,
+        splitClassifier: Map<LineState, string>,
+        unifiedClassifier: Map<LineState, string>
+    ): void;
 }
