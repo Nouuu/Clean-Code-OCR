@@ -4,7 +4,7 @@
 
 ### User Story 1
 
-Le format créé par la machine est le suivant :
+The input format created by the machine is as follows:
 
 ```
     _  _     _  _  _  _  _ 
@@ -13,41 +13,41 @@ Le format créé par la machine est le suivant :
   
 ```
 
-Chaque entrée fait exactement **4 lignes et 27 colonnes** (9 x 3).
-Les trois premières lignes décrivent des chiffres grâce à des pipes et des underscores.
-La quatrième ligne est blanche.
+Each entry is exactly **4 rows and 27 columns** (9 x 3).
+The first three lines describe numbers using pipes and underscores.
+The fourth line is blank.
 
-Chaque entrée ou **code** créé possède 9 chiffres, chacun allant de 0 à 9.
-Un fichier classique peut contenir jusqu'à 100 entrées.
+Each entry or **code** created has 9 digits, each ranging from 0 to 9.
+A typical file can contains up to 100 entries.
 
-Ecrivez un programme qui prend en entrée ce fichier et arrive à parser les codes contenus.
+Write a program that takes this file as input and manages to parse the codes contained.
 
 ### User Story 2
 
-Parfois, la machine génère de mauvais codes.
-Vous devez maintenant pouvoir valider les codes grâce à un checksum.
-Il peut être calculé de la manière suivante :
+Sometimes the machine generates wrong codes.
+You should now be able to validate the codes using a checksum.
+It can be calculated as follows:
 
 code     : 3 5 6 6 0 9 7 0 1
 position : p9 p8 p7 p6 p5 p4 p3 p2 p1
 
-calcul du checksum :  
+checksum computing : 
 ((1*p1) + (2*p2) + (3*p3) + ... + (9*p9)) mod 11 == 0
 
 ### User Story 3
 
-Votre manager souhaite obtenir les résultats de votre programme.
-Il vous demande d'écrire un fichier en sortie, pour chacun des fichiers en entrée, sur ce format:
+Your manager wants the results of your program.
+It asks you to write an output file, for each of the input files, on this format :
 
-457508000  
+457508000 
 664371495 ERR
 
-Le fichier en sortie possède un code par ligne.
-Si le checksum est mauvais, c'est indiqué par ERR dans une seconde colonne indiquant le statut.
+The output file has one code per line.
+If the checksum is bad, it is indicated by ERR in a second column indicating the status.
 
 ### User Story 4
 
-Parfois, la machine produit des nombres illisibles, comme le suivant :
+Sometimes the machine produces unreadable numbers, such as the following :
 
 ```
     _  _     _  _  _  _  _ 
@@ -56,9 +56,9 @@ Parfois, la machine produit des nombres illisibles, comme le suivant :
   
 ```
 
-Votre programme doit être capable de repérer de tels problèmes.
-Dans ce cas, les nombres inconnus sont remplacés par des '?'.
-Mettez à jour votre sortie fichier. Avec le nombre illisible précédent, cela donnerait :
+Your program should be able to spot such problems.
+In this case, the unknown numbers are replaced by '?'.
+Update your file output. With the previous unreadable number, this would give :
 
 457508000    
 664371495 ERR   
@@ -66,29 +66,29 @@ Mettez à jour votre sortie fichier. Avec le nombre illisible précédent, cela 
 
 ### User Story 5
 
-Votre manager aimerait faire un peu de classification.
-Pour un ensemble de fichiers donnés en entrée, il voudrait maintenant avoir la possibilité de :
+Your manager would like to do some classification.
+For a set of files given as input, he would now like to have the possibility of:
 
-- soit garder le comportement actuel et créer un fichier sortie pour chaque fichier entrée
-- soit utiliser un nouveau comportement qui lui permette de "regrouper" les codes similaires
+- Either keep the current behavior and create an output file for each input file
+- Or use a new behavior that allows it to "group" similar codes
 
-Ce comportement est le suivant : Quel que soit le nombre de fichiers en entrée, le programme va créer 3 sorties nommées
-authorized, errored, et unknown
+This behavior is as follows: Regardless of the number of input files, the program will create 3 outputs named
+authorized, errored, and unknown
 
-Authorized contient tous les checksums valides  
-Errored contient tous les checksums invalides  
-Unknown contient tous les checksums illisibles
+Authorized contains all valid checksums
+Errored contains all invalid checksums
+Unknown contains all unreadable checksums
 
 ### User Story 6
 
-Fournissez un outil de commande aux autres développeurs de votre société pour qu'ils puissent facilement utiliser toutes
-les fonctionnalités que vous venez de créer.
+Provide a command tool to other developers in your company so they can easily use all
+the features you just created.
 
-Son implémentation est libre.
+Its implementation is free.
 
-## Implémentation
+## Implementation
 
-### CLI et lancement
+### CLI and launch
 
 You can run few commands to start/build this app :
 
@@ -97,9 +97,22 @@ You can run few commands to start/build this app :
 - `npm run build-dev` :  Compile the app and generate **dist** folder then run it ( build + start )
 - `npm run dev` : Directly run the TS source project
 - `npm run test` : Run cucumber tests. This generates two report :
-    - One in coverage folder which show the test coverage
+    - One in **coverage** folder which show the test coverage
     - One in **cucumber_report.html** at the root of the project that show how cucumber tests results
 - `npm run lint` : Run `Eslint` on source code
+
+#### Run command, arguments
+
+When running program, theres is few (optional) arguments that we can use :
+
+- **h** (optional): ***boolean*** => display help
+- **s** (optional, default=false): ***boolean*** => split classifier into multiple files
+- **m** (optional, default=100): ***number*** => set the max number of lines to process
+- **l** (optional, default=9): ***number*** => number of digits per lines
+- **i** (optional, default='input.txt'): ***string*** => input filename
+- **v** (optional): ***string*** => valid output filename
+- **e** (optional): ***string*** => error output filename
+- **u** (optional): ***string*** => unreadable output filename
 
 ### Classes
 
