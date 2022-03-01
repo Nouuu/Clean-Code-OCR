@@ -1,4 +1,4 @@
-import { Given, When, Then } from '@cucumber/cucumber';
+import { Given, Then, When } from '@cucumber/cucumber';
 import { Checksum } from '../../src/ocr/Checksum';
 import { expect } from 'chai';
 import { NumberChecksum } from '../../src/ocr/NumberChecksum';

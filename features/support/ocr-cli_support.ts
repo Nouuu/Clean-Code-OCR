@@ -1,12 +1,11 @@
 import { Given, Then, When } from '@cucumber/cucumber';
 import { OcrCLI } from '../../src/cli/ocr-cli';
-import { expect } from 'chai';
+import { expect, spy, use } from 'chai';
 import {
     splitClassifierStateAssociation,
     unifiedClassifierStateAssociation,
 } from '../../src/utils/resources';
 import { LineState } from '../../src/ocr/LineState';
-import { use, spy } from 'chai';
 import spies from 'chai-spies';
 
 use(spies);
