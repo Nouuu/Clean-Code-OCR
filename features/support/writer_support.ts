@@ -6,9 +6,9 @@ import * as fs from 'fs';
 import { Writer } from '../../src/io/Writer';
 
 let writer: Writer;
-let filename: string = '';
-let thrownError: boolean = false;
-let thrownErrorMessage: string = '';
+let filename = '';
+let thrownError = false;
+let thrownErrorMessage = '';
 Given(
     /^I want to write some input in the file (.*)$/,
     (givenFilename: string) => {

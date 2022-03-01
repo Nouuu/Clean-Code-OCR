@@ -10,8 +10,6 @@ import {
     defaultDigitMap,
     OCRArgsDefaultValues,
     OCRSchema,
-    splitClassifierStateAssociation,
-    unifiedClassifierStateAssociation,
     unreadableSequence,
 } from '../utils/resources';
 import { Parser } from '../parser/Parser';
@@ -45,7 +43,11 @@ export class OcrCLI implements CLI {
         this.parser = parser;
     }
 
-    run(args: string): void {
+    run(
+        args: string,
+        splitClassifier: Map<LineState, string>,
+        unifiedClassifier: Map<LineState, string>
+    ): void {
         try {
             const argsParser: ArgParser = new Args(
                 OCRSchema,
@@ -56,7 +58,7 @@ export class OcrCLI implements CLI {
             if (argsParser.getBoolean('h')) {
                 OcrCLI.displayHelp();
             } else {
-                this.runOcr(argsParser);
+                this.runOcr(argsParser, splitClassifier, unifiedClassifier);
             }
         } catch (e: any) {
             console.error(`Error: ${e.message}`);
@@ -76,9 +78,16 @@ export class OcrCLI implements CLI {
         );
     }
 
-    private runOcr(argsParser: ArgParser): void {
-        const classifierAssociation =
-            OcrCLI.getClassifierAssociation(argsParser);
+    private runOcr(
+        argsParser: ArgParser,
+        splitClassifier: Map<LineState, string>,
+        unifiedClassifier: Map<LineState, string>
+    ): void {
+        const classifierAssociation = OcrCLI.getClassifierAssociation(
+            argsParser,
+            splitClassifier,
+            unifiedClassifier
+        );
         this.defineClassifiers(argsParser, classifierAssociation);
 
         const classifier = new FileClassifier(classifierAssociation);
@@ -99,10 +108,12 @@ export class OcrCLI implements CLI {
         );
     }
 
-    private static getClassifierAssociation(argsParser: ArgParser) {
-        return argsParser.getBoolean('s')
-            ? splitClassifierStateAssociation
-            : unifiedClassifierStateAssociation;
+    private static getClassifierAssociation(
+        argsParser: ArgParser,
+        splitClassifier: Map<LineState, string>,
+        unifiedClassifier: Map<LineState, string>
+    ) {
+        return argsParser.getBoolean('s') ? splitClassifier : unifiedClassifier;
     }
 
     private defineClassifiers(

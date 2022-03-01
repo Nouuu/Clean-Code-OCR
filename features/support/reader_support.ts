@@ -6,10 +6,10 @@ import { DefaultParser } from '../../src/parser/DefaultParser';
 
 const fileReader = new FileReader();
 const parser = new DefaultParser();
-let filename: string = '';
-let fileContent: string = '';
-let thrownError: boolean = false;
-let thrownErrorMessage: string = '';
+let filename = '';
+let fileContent = '';
+let thrownError = false;
+let thrownErrorMessage = '';
 let parsedContent: string[] = [];
 
 Given(/^the file (.*)$/, (givenFilename: string) => {
