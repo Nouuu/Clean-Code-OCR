@@ -6,10 +6,10 @@ import {
     unifiedClassifierStateAssociation,
 } from '../../src/utils/resources';
 import { LineState } from '../../src/ocr/LineState';
+import { use, spy } from 'chai';
+import spies from 'chai-spies';
 
-const chai = require('chai');
-const spies = require('chai-spies');
-chai.use(spies);
+use(spies);
 
 let given_args: string;
 
@@ -18,16 +18,16 @@ let ocrCli: OcrCLI;
 Given(/the following command line/, (args: string) => {
     ocrCli = new OcrCLI();
     given_args = args;
-    chai.spy.restore(OcrCLI, 'displayHelp');
-    chai.spy.restore(OcrCLI, 'runOcr');
-    chai.spy.restore(ocrCli['reader'], 'read');
-    chai.spy.restore(splitClassifierStateAssociation, 'get');
+    spy.restore(OcrCLI, 'displayHelp');
+    spy.restore(OcrCLI, 'runOcr');
+    spy.restore(ocrCli['reader'], 'read');
+    spy.restore(splitClassifierStateAssociation, 'get');
 
     // Spies
-    chai.spy.on(OcrCLI, 'displayHelp');
-    ocrCli['runOcr'] = chai.spy.on(ocrCli, 'runOcr');
-    ocrCli['reader']['read'] = chai.spy.on(ocrCli['reader'], 'read');
-    splitClassifierStateAssociation.get = chai.spy.on(
+    spy.on(OcrCLI, 'displayHelp');
+    ocrCli['runOcr'] = spy.on(ocrCli, 'runOcr');
+    ocrCli['reader']['read'] = spy.on(ocrCli['reader'], 'read');
+    splitClassifierStateAssociation.get = spy.on(
         splitClassifierStateAssociation,
         'get'
     );
