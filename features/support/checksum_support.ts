@@ -6,7 +6,7 @@ import { NumberChecksum } from '../../src/ocr/NumberChecksum';
 let given_sequence: string;
 let given_sequence_validity: boolean;
 
-let checksum: Checksum = new NumberChecksum();
+const checksum: Checksum = new NumberChecksum();
 
 Given(/The following sequence (.+)$/, (sequence: string) => {
     given_sequence = sequence;
