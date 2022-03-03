@@ -151,6 +151,27 @@ const defaultDigitMap: Map<string, string> = new Map([
 ]);
 ```
 
+To allow the user to choose the way the outputs are classified, we use the following class to return a said output destination for a given state :
+```typescript
+export interface Classifier {
+    getDestination(lineState: LineState): string;
+}
+```
+
+The user can choose between two predefined classifiers, the default one is the unified classifier :
+```typescript
+export const splitClassifierStateAssociation: Map<LineState, string> = new Map([
+    [LineState.VALID, 'authorized.txt'],
+    [LineState.ERROR, 'errored.txt'],
+    [LineState.UNREADABLE, 'unknown.txt'],
+]);
+export const unifiedClassifierStateAssociation: Map<LineState, string> =
+    new Map([
+        [LineState.VALID, 'output.txt'],
+        [LineState.ERROR, 'output.txt'],
+        [LineState.UNREADABLE, 'output.txt'],
+    ]);
+```
 ### Tests & Coverage
 
 When we run the cucumber tests, it generates two reports
