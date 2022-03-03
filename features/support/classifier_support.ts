@@ -9,7 +9,7 @@ let lineStateAssociation: Map<LineState, string>;
 let classifier: Classifier;
 
 let given_destination: string;
-let thrownError: boolean = false;
+let thrownError = false;
 let thrownErrorMessage: string;
 Given(
     /The following state to destination association$/,
