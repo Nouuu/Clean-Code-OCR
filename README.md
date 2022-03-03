@@ -88,7 +88,7 @@ Its implementation is free.
 
 ## Implementation
 
-### CLI and launch
+### Usage
 
 You can run few commands to start/build this app :
 
@@ -116,7 +116,40 @@ When running program, theres is few (optional) arguments that we can use :
 
 ### Classes
 
-The two main classes
+The main class is probably the one that can parse each line, regarding the given schéma :
+
+```typescript
+interface Parser {
+    parseText(text: string, maxLines: number, lineSize: number): string[];
+
+    parseLine(line: string, length: number): string;
+}
+```
+
+This class consist in split each character and use another classe to get the parsed char :
+
+```typescript
+interface CharParser {
+    parseChar(input: string): string;
+}
+```
+
+To be able to match the digit correctly, we are using a stirng map :
+
+```typescript
+const defaultDigitMap: Map<string, string> = new Map([
+    [' _\n| |\n|_|', '0'],
+    ['\n  |\n  |', '1'],
+    [' _\n _|\n|_', '2'],
+    [' _\n _|\n _|', '3'],
+    ['\n|_|\n  |', '4'],
+    [' _\n|_\n _|', '5'],
+    [' _\n|_\n|_|', '6'],
+    [' _\n  |\n  |', '7'],
+    [' _\n|_|\n|_|', '8'],
+    [' _\n|_|\n _|', '9'],
+]);
+```
 
 ### Tests & Coverage
 
