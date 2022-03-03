@@ -1,6 +1,6 @@
 # Clean Code OCR
 
-## Énoncé
+## Subject
 
 ### User Story 1
 
@@ -18,7 +18,7 @@ The first three lines describe numbers using pipes and underscores.
 The fourth line is blank.
 
 Each entry or **code** created has 9 digits, each ranging from 0 to 9.
-A typical file can contains up to 100 entries.
+A typical file can contain up to 100 entries.
 
 Write a program that takes this file as input and manages to parse the codes contained.
 
@@ -103,7 +103,7 @@ You can run few commands to start/build this app :
 
 #### Run command, arguments
 
-When running program, theres is few (optional) arguments that we can use :
+When running the program, there is a few (optional) arguments that we can use :
 
 - **h** (optional): ***boolean*** => display help
 - **s** (optional, default=false): ***boolean*** => split classifier into multiple files
@@ -116,7 +116,7 @@ When running program, theres is few (optional) arguments that we can use :
 
 ### Classes
 
-The main class is probably the one that can parse each line, regarding the given schéma :
+The main class is probably the one that can parse each line, regarding the given schema :
 
 ```typescript
 interface Parser {
@@ -126,7 +126,7 @@ interface Parser {
 }
 ```
 
-This class consist in split each character and use another classe to get the parsed char :
+This class consists in splitting each character, and it uses another class to get the parsed char :
 
 ```typescript
 interface CharParser {
@@ -134,7 +134,7 @@ interface CharParser {
 }
 ```
 
-To be able to match the digit correctly, we are using a stirng map :
+To be able to match the digit correctly, we are using a string map :
 
 ```typescript
 const defaultDigitMap: Map<string, string> = new Map([
